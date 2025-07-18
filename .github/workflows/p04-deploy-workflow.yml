@@ -27,7 +27,7 @@ jobs:
           run: npm ci
         - name: Run lint
           working-directory: ./04PracticeProject
-          run: npm lint
+          run: npm run lint
         - name: Run tests
           working-directory: ./04PracticeProject
           run: npm test

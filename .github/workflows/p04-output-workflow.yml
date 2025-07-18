@@ -1,4 +1,4 @@
-name: Output information
+name: Output p04 information
 on:
   workflow_dispatch:
   push:
