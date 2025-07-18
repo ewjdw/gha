@@ -1,0 +1,19 @@
+name: Output information
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - output-workflow
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output GitHub context
+        run: |
+          echo "GitHub Context:"
+          echo "Event : ${{ toJson(github.event) }}"

@@ -1,0 +1,57 @@
+name: Deploy practice project
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - practice-project
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        #   already installed on ubuntu-latest but could be used to specify a version
+        # - name: Set up Node.js
+        #   uses: actions/setup-node@v4
+        #   with:   
+        #     node-version: '20'
+        - name: Install dependencies
+          working-directory: ./04PracticeProject
+          run: npm ci
+        - name: Run lint
+          working-directory: ./04PracticeProject
+          run: npm lint
+        - name: Run tests
+          working-directory: ./04PracticeProject
+          run: npm test
+    build:
+      runs-on: ubuntu-latest
+      needs: test
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Install dependencies
+          working-directory: ./second-action
+          run: npm ci
+        - name: Build application
+          working-directory: ./second-action
+          run: npm run build
+        # - name: Deploy application
+        #   if: github.event_name == 'push'
+        #   run: echo "Deploying application..." # Replace with actual deployment commands
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build
+      if: github.event_name == 'push'
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Deploy application
+          run: echo "Deploying application..." # Replace with actual deployment commands
