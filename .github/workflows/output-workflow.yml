@@ -24,7 +24,7 @@ jobs:
       - name: Output job context
         run: |
           echo "Job Context:"
-          echo "Job Name: ${{ job.status }}"
+          echo "Job status: ${{ job.status }}"
           echo "Run ID: ${{ github.run_id }}"
           echo "Run Number: ${{ github.run_number }}"
           echo "${{ toJson(job) }}"
