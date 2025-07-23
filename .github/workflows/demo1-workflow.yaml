@@ -31,10 +31,13 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
             - name: Install dependencies
+              working-directory: ./04PracticeProject
               run: npm ci
             - name: Test application
+              working-directory: ./04PracticeProject
               run: npm test
             - name: Build application
+              working-directory: ./04PracticeProject
               run: npm run build
             - name: Deploy application
               run: echo "Deploying application..." # Replace with actual deployment commands

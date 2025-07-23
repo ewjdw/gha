@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - practice-project
+    paths:
+      - 'p04-*'
   pull_request:
     branches:
       - main
