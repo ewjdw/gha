@@ -4,6 +4,15 @@ on:
     push:
         branches:
             - main
+            - develop
+            - dev-*    # Matches branches like 'dev-1', 'dev-2', etc.
+            - feature/** # Matches all branches starting with 'feature/' (feature/xyz/abc)
+            - practice-*
+        # paths: # Uncomment if you want to filter by paths
+        #     - 'src/**'
+        #     - 'docs/**'
+        paths-ignore:
+            - 'README.md'
     pull_request:
         branches:
             - main
