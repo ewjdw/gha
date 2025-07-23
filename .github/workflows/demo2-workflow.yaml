@@ -49,7 +49,7 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: build-artifacts
-            path: ./04PracticeProject
+            path: ./04PracticeProject/dist
         - name: Output contents
           run: ls
         - name: Deploy application
