@@ -1,4 +1,5 @@
 name: Output p04 information
+
 on:
   workflow_dispatch:
   push:
@@ -9,6 +10,7 @@ on:
       - main
     types:
       - closed
+
 jobs:
   info:
     runs-on: ubuntu-latest
