@@ -49,8 +49,8 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: build-artifacts
-            path: ./04PracticeProject/dist
+            path: ./04PracticeProject
         - name: Output contents
-          run: ls
+          run: ls ./04PracticeProject
         - name: Deploy application
           run: echo "Deploying application..." # Replace with actual deployment commands
