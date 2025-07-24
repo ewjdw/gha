@@ -96,6 +96,7 @@ jobs:
           run: echo "Deploying application..." # Replace with actual deployment commands
     report:
       runs-on: ubuntu-latest
+      needs: [lint, deploy]
       if: failure()
       steps:
         - name: Generate report
