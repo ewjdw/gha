@@ -94,3 +94,9 @@ jobs:
           run: echo '${{ needs.build.outputs.script-files }}'
         - name: Deploy application
           run: echo "Deploying application..." # Replace with actual deployment commands
+    report:
+      runs-on: ubuntu-latest
+      if: failure()
+      steps:
+        - name: Generate report
+          run: echo "${{ github }}"
