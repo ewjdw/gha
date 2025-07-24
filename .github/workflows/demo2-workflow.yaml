@@ -28,6 +28,8 @@ jobs:
         run:
           working-directory: ./04PracticeProject
       needs: test
+      outputs:
+        script-files: ${{ steps.publish.outputs.file }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v4
@@ -35,6 +37,9 @@ jobs:
           run: npm ci
         - name: Build application
           run: npm run build
+        - name: Publish JS filename
+          id: publish
+          run: find ./04PracticeProject/dist/**/*.js -type f -execdir echo 'file={}' >> $GITHUB_OUTPUT ';' # Old syntax: echo '::set-output name=file::{}' ';'
         - name: Upload build artifacts
           uses: actions/upload-artifact@v4
           with:
@@ -52,5 +57,7 @@ jobs:
             path: ./04PracticeProject
         - name: Output contents
           run: ls ./04PracticeProject
+        - name: Output file name
+          run: echo '${{ needs.build.outputs.script-files }}'
         - name: Deploy application
           run: echo "Deploying application..." # Replace with actual deployment commands
