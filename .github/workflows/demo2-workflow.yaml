@@ -39,7 +39,7 @@ jobs:
           run: npm run build
         - name: Publish JS filename
           id: publish
-          run: find ./04PracticeProject/dist/**/*.js -type f -execdir echo 'file={}' >> $GITHUB_OUTPUT ';' # Old syntax: echo '::set-output name=file::{}' ';'
+          run: find dist/**/*.js -type f -execdir echo 'file={}' >> $GITHUB_OUTPUT ';' # Old syntax: echo '::set-output name=file::{}' ';'
         - name: Upload build artifacts
           uses: actions/upload-artifact@v4
           with:
