@@ -1,0 +1,73 @@
+name: Deploy website
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - practice-project
+
+jobs:
+    test:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./04PracticeProject
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Cache dependencies
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        - name: Install dependencies
+          run: npm ci
+        - name: Run lint
+          run: npm run lint
+        - name: Run tests
+          run: npm test
+    build:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./04PracticeProject
+      needs: test
+      outputs:
+        script-files: ${{ steps.publish.outputs.file }}
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Cache dependencies
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        - name: Install dependencies
+          run: npm ci
+        - name: Build application
+          run: npm run build
+        - name: Publish JS filename
+          id: publish
+          run: find dist/**/*.js -type f -execdir echo 'file={}' >> $GITHUB_OUTPUT ';' # Old syntax: echo '::set-output name=file::{}' ';'
+        - name: Upload build artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: build-artifacts
+            path: |
+              ./04PracticeProject/dist
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: Download build artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: build-artifacts
+            path: ./04PracticeProject
+        - name: Output contents
+          run: ls ./04PracticeProject
+        - name: Output file name
+          run: echo '${{ needs.build.outputs.script-files }}'
+        - name: Deploy application
+          run: echo "Deploying application..." # Replace with actual deployment commands

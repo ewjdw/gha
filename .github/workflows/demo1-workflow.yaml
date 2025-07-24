@@ -1,0 +1,42 @@
+name: Events demo
+
+on: 
+    push:
+        branches:
+            - main
+            - develop
+            - dev-*    # Matches branches like 'dev-1', 'dev-2', etc.
+            - feature/** # Matches all branches starting with 'feature/' (feature/xyz/abc)
+            - practice-*
+        paths:
+            - '.github/workflows/demo1-workflow.yaml'
+        # paths-ignore: # Uncomment if you want to ignore certain paths
+        #     - 'README.md'
+    pull_request:
+        branches:
+            - main
+        types:
+            - opened
+            - edited
+            - closed
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Output event data
+              run: echo "${{ toJson(github.event) }}"
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Install dependencies
+              working-directory: ./04PracticeProject
+              run: npm ci
+            - name: Test application
+              working-directory: ./04PracticeProject
+              run: npm test
+            - name: Build application
+              working-directory: ./04PracticeProject
+              run: npm run build
+            - name: Deploy application
+              run: echo "Deploying application..." # Replace with actual deployment commands

@@ -1,0 +1,23 @@
+name: Output p04 information
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - practice-project
+    paths:
+      - 'p04-*'
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output GitHub context
+        run: |
+          echo "GitHub Context:"
+          echo "Event : ${{ toJson(github.event) }}"
