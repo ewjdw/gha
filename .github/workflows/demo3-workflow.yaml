@@ -1,4 +1,4 @@
-name: Deploy website
+name: Deploy website - demo3
 
 on:
   workflow_dispatch:
