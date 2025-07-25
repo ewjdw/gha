@@ -1,0 +1,16 @@
+name: Reusable Workflow
+on:
+  workflow_call:
+    # inputs:
+    #   working-directory:
+    #     required: true
+    #     type: string
+jobs:
+  dummy-deploy:
+    runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Dummy deployment step
+        run: echo "Deploying " #from ${{ inputs.working-directory }}"
