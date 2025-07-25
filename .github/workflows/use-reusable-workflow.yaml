@@ -8,45 +8,10 @@ on:
       - matrix
 
 jobs:
-    lint:
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./04PracticeProject
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-        - name: Cache dependencies
-          id: cache-npm
-          uses: actions/cache@v4
-          with:
-            path: ./04PracticeProject/node_modules
-            key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        - name: Install dependencies
-          if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-          run: npm ci
-        - name: Run lint
-          run: npm run lint
     test:
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./04PracticeProject
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-        - name: Cache dependencies
-          id: cache-npm
-          uses: actions/cache@v4
-          with:
-            path: ./04PracticeProject/node_modules
-            key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        - name: Install dependencies
-          if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-          run: npm ci
-        - name: Run tests
-          id: run-tests
-          run: npm test
+      uses: ./.github/workflows/reusable-test.yaml
+      with:
+        working-directory: ./04PracticeProject
     build:
       runs-on: ubuntu-latest
       defaults:
