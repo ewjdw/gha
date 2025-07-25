@@ -13,13 +13,13 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        node-version: [12, 18, 20]
+        node-version: [18, 20]
         os: [ubuntu-latest, windows-latest]
         include:
           - node-version: 14
             os: ubuntu-latest
         exclude:
-          - node-version: 12
+          - node-version: 18
             os: windows-latest
     defaults:
       run:
