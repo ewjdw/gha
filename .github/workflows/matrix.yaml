@@ -35,8 +35,8 @@ jobs:
       - name: Install dependencies
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm ci
-      - name: Resolve node 14 issue
-        if: ${{ matrix.node-version == '14' }}
+      - name: Resolve node 16 issue
+        if: ${{ matrix.node-version == '16' }}
         run: npm install react-native-get-random-values
       - name: Build application
         run: npm run build
