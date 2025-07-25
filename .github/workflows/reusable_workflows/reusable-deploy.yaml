@@ -1,0 +1,27 @@
+name: Reusable Deploy
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        required: true
+        type: string
+      artifact-name:
+        required: false
+        default: 'build-artifacts'
+        type: string
+jobs:
+  dummy-deploy:
+    runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.working-directory }}
+      - name: Dummy deployment step
+        run: echo "Deploying from ${{ inputs.working-directory }}"
