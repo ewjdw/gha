@@ -76,10 +76,5 @@ jobs:
     deploy:
       needs: build
       uses: ./.github/workflows/reusable-workflow.yaml
-    report:
-      runs-on: ubuntu-latest
-      needs: [lint, deploy]
-      if: failure()
-      steps:
-        - name: Generate report
-          run: echo "${{ toJson(github) }}"
+      with:
+        working-directory: ./04PracticeProject
