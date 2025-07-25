@@ -75,6 +75,6 @@ jobs:
               ./04PracticeProject/dist
     deploy:
       needs: build
-      uses: ./.github/workflows/reusable-workflow.yaml
+      uses: ./.github/workflows/reusable_workflows/reusable-deploy.yaml
       with:
         working-directory: ./04PracticeProject
