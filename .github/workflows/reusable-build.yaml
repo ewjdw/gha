@@ -1,12 +1,16 @@
-name: Reusable Test
+name: Reusable Build
 on:
   workflow_call:
     inputs:
       working-directory:
         required: true
         type: string
+      artifact-name:
+        required: false
+        default: 'build-artifacts'
+        type: string
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,14 +27,11 @@ jobs:
       - name: Install dependencies
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm ci
-      - name: Run lint
-        run: npm run lint
-      - name: Run tests
-        id: run-tests
-        run: npm test
-      - name: Upload test results
-        if: ${{ failure() && steps.run-tests.outcome == 'failure' }}
+      - name: Build application
+        run: npm run build
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: ${{ inputs.working-directory }}/test.json
+          name: ${{ inputs.artifact-name }}
+          path: |
+            ${{ inputs.working-directory }}/dist
