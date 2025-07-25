@@ -13,8 +13,14 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        node-version: [14, 16, 18]
+        node-version: [12, 18, 20]
         os: [ubuntu-latest, windows-latest]
+        include:
+          - node-version: 14
+            os: ubuntu-latest
+        exclude:
+          - node-version: 12
+            os: windows-latest
     defaults:
       run:
         working-directory: ./04PracticeProject
@@ -35,8 +41,5 @@ jobs:
       - name: Install dependencies
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         run: npm ci
-      - name: Resolve node 16 issue
-        if: ${{ matrix.node-version == '16' }}
-        run: npm install react-native-get-random-values
       - name: Build application
         run: npm run build
