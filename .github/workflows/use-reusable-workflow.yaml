@@ -22,3 +22,9 @@ jobs:
       uses: ./.github/workflows/reusable-deploy.yaml
       with:
         working-directory: ./04PracticeProject
+    print-deploy-result:
+      needs: deploy
+      runs-on: ubuntu-latest
+      steps:
+        - name: Print deployment result
+          run: echo "${{ needs.deploy.outputs.result }}"

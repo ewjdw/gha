@@ -9,8 +9,17 @@ on:
         required: false
         default: 'build-artifacts'
         type: string
+    outputs:
+      artifact-name:
+        description: Name of the artifact uploaded
+        value: ${{ inputs.artifact-name }} was uploaded
+      result:
+        description: Result of the deployment
+        value: ${{ jobs.dummy-deploy.outputs.deployment-result }}
 jobs:
   dummy-deploy:
+    outputs:
+      deployment-result: ${{ steps.set-result.outputs.step-result }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,3 +31,6 @@ jobs:
           path: ${{ inputs.working-directory }}
       - name: Dummy deployment step
         run: echo "Deploying from ${{ inputs.working-directory }}"
+      - name: Set result output
+        id: set-result
+        run: echo "step-result=Deployment completed successfully" >> $GITHUB_OUTPUT
